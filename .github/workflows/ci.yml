@@ -34,7 +34,7 @@ jobs:
         run: |
           coverage run --source ./src -m pytest
           coverage report -m
-          coverage json -i -o tests/coverage.json
+          coverage xml -i -o coverage.xml
       # NOTE: GitHub Actions and Code Climate do not seem to get along
       # very well: https://github.com/codeclimate/test-reporter/issues/406
       - name: Report coverage
