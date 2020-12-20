@@ -38,7 +38,7 @@ jobs:
       # NOTE: GitHub Actions and Code Climate do not seem to get along
       # very well: https://github.com/codeclimate/test-reporter/issues/406
       - name: Report coverage
-        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build --exit-code $?
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build -t coverage.py --exit-code $?
         env:
           # FIXME: This ID should be abstracted into a secret and not hardcoded here
           CC_TEST_REPORTER_ID: fbb02caaba945d0c6c7bf33428f6900c90af91a9a4b067aa506e4b39c812b4a5
