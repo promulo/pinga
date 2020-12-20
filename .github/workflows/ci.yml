@@ -25,14 +25,20 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Prepare Code Climate for coverage report
+        run: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
+          GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter before-build
       - name: Run unit tests
         run: |
           coverage run --source ./src -m pytest
           coverage report -m
-      - name: Publish code coverage report
-        uses: paambaati/codeclimate-action@v2.7.5
+          coverage xml -i -o coverage.xml
+      # NOTE: GitHub Actions and Code Climate do not seem to get along
+      # very well: https://github.com/codeclimate/test-reporter/issues/406
+      - name: Report coverage
+        run: GIT_BRANCH=$GITHUB_REF GIT_COMMIT_SHA=$GITHUB_SHA ./cc-test-reporter after-build -t coverage.py --exit-code $?
         env:
+          # FIXME: This ID should be abstracted into a secret and not hardcoded here
           CC_TEST_REPORTER_ID: fbb02caaba945d0c6c7bf33428f6900c90af91a9a4b067aa506e4b39c812b4a5
-        with:
-          coverageCommand: coverage xml -i -o tests/coverage.xml
-          coverageLocations: tests/coverage.xml
