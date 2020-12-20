@@ -1,6 +1,6 @@
 import pytest
 from jsonschema import SchemaError, ValidationError, validate
-from pinga import _check_site as check_site
+from pinga import check_site
 from requests.exceptions import RequestException
 from schema import STATUS_SCHEMA
 
