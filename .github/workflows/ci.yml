@@ -34,5 +34,5 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: fbb02caaba945d0c6c7bf33428f6900c90af91a9a4b067aa506e4b39c812b4a5
         with:
-          coverageCommand: coverage xml -i -o tests/coverage.xml
-          coverageLocations: tests/coverage.xml
+          coverageCommand: coverage json -i -o tests/coverage.json
+          coverageLocations: tests/coverage.json
