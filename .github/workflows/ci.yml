@@ -25,10 +25,14 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test & publish code coverage
+      - name: Run unit tests
+        run: |
+          coverage run --source ./src -m pytest
+          coverage report -m
+      - name: Publish code coverage report
         uses: paambaati/codeclimate-action@v2.7.5
         env:
           CC_TEST_REPORTER_ID: fbb02caaba945d0c6c7bf33428f6900c90af91a9a4b067aa506e4b39c812b4a5
         with:
-          coverageCommand: coverage run --source ./src -m pytest
-          coverageLocations: .coverage
+          coverageCommand: coverage xml -i -o tests/coverage.xml
+          coverageLocations: tests/coverage.xml
