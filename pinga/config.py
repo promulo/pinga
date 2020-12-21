@@ -8,6 +8,15 @@ from jsonschema import SchemaError, ValidationError, validate
 from pinga.schema import SITES_SCHEMA
 
 
+def get_kafka_config() -> dict:
+    config = _load_cfg_file()
+
+    try:
+        return dict(config["kafka"])
+    except NoSectionError as err:
+        raise BadConfigException(str(err))
+
+
 def get_sites_list() -> dict:
     config = _load_cfg_file()
 
