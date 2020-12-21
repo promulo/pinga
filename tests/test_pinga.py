@@ -8,10 +8,15 @@ def test_check_site_happy_path(requests_mock):
     test_site = "http://example.org"
     requests_mock.get(test_site)
 
+    result = check_site(test_site)
+
     try:
-        validate(instance=check_site(test_site), schema=STATUS_SCHEMA)
+        validate(instance=result, schema=STATUS_SCHEMA)
     except (SchemaError, ValidationError) as err:
         pytest.fail("Unexpected validation error: {}".format(err))
+    assert result["url"] == test_site
+    assert result["status"] == "up"
+    assert result["httpStatus"] == 200
 
 
 @pytest.mark.parametrize(
@@ -30,5 +35,6 @@ def test_check_site_error(sample, expected_msg):
         validate(instance=result, schema=STATUS_SCHEMA)
     except (SchemaError, ValidationError) as err:
         pytest.fail("Unexpected validation error: {}".format(err))
-
+    assert result["url"] == sample
+    assert result["status"] == "error"
     assert expected_msg in result["errorMessage"]
