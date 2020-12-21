@@ -6,8 +6,7 @@ on:
     branches: [master]
 jobs:
   build:
-    # Running on macOS as a workaround to https://github.com/paambaati/codeclimate-action/issues/275
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
