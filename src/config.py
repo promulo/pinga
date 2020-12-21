@@ -7,8 +7,13 @@ from jsonschema import SchemaError, ValidationError, validate
 from schema import CONFIG_SCHEMA
 
 
+def get_configured_sites() -> list:
+    config = load_config()
+    return config["sites"]
+
+
 def load_config():
-    sites_file = os.getenv("SITES_FILE")
+    sites_file = os.getenv("SITES_FILE", default="sites.json")
     if not sites_file:
         raise BadConfigException("Required environment variable SITES_FILE is not set")
 
