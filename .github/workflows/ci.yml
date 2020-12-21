@@ -6,7 +6,8 @@ on:
     branches: [master]
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Running on macOS as a workaround to https://github.com/paambaati/codeclimate-action/issues/275
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
@@ -30,5 +31,4 @@ jobs:
       - name: Publish code coverage report
         uses: paambaati/codeclimate-action@v2.7.5
         env:
-          # FIXME: This ID should be abstracted into a secret and not hardcoded here
-          CC_TEST_REPORTER_ID: fbb02caaba945d0c6c7bf33428f6900c90af91a9a4b067aa506e4b39c812b4a5
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

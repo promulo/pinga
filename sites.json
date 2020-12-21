@@ -1,7 +1,7 @@
 {
     "sites": [
-        "aiven.io",
-        "console.aiven.io",
-        "example.org"
+        "https://aiven.io",
+        "https://console.aiven.io",
+        "http://example.org"
     ]
 }
