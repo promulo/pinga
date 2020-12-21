@@ -22,10 +22,10 @@ jobs:
           pip install -r requirements-ci.txt
       - name: Lint with flake8
         run: |
-          flake8 ./src
+          flake8 ./pinga
       - name: Run unit tests and generate coverage report
         run: |
-          coverage run --source ./src -m pytest
+          coverage run --source ./pinga -m pytest
           coverage report -m
           coverage xml -i -o coverage.xml
       - name: Publish code coverage report
