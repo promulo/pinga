@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 import pytest
-from pinga.config import BadConfigException, get_sites_list
+from pinga.config import BadConfigException, get_kafka_config, get_sites_list
 
 
 @pytest.mark.parametrize(
@@ -26,6 +26,16 @@ def test_get_sites_list_errors(mock_parser, sites_file, error_msg):
 
 def test_get_sites_list_happy_path():
     sites_list = get_sites_list()
+
     assert sites_list is not None
     assert "sites" in sites_list
     assert "http://test.example.org" in sites_list["sites"]
+
+
+def test_get_kafka_config():
+    kafka_config = get_kafka_config()
+
+    assert kafka_config["service_uri"] == "example.org:123456"
+    assert kafka_config["ssl_cafile"] == "ca.pem"
+    assert kafka_config["ssl_certfile"] == "service.cert"
+    assert kafka_config["ssl_keyfile"] == "service.key"
