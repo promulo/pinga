@@ -24,6 +24,15 @@ def test_get_sites_list_errors(mock_parser, sites_file, error_msg):
     assert str(exc.value) == error_msg
 
 
+def test_get_sites_list_missing(monkeypatch):
+    monkeypatch.setenv("PINGA_CFG", "tests/config/bad.cfg")
+
+    with pytest.raises(BadConfigException) as exc:
+        get_sites_list()
+
+    assert str(exc.value) == "No section: 'checker'"
+
+
 def test_get_sites_list_happy_path():
     sites_list = get_sites_list()
 
@@ -32,10 +41,19 @@ def test_get_sites_list_happy_path():
     assert "http://test.example.org" in sites_list["sites"]
 
 
-def test_get_kafka_config():
+def test_get_kafka_config_happy_path():
     kafka_config = get_kafka_config()
 
     assert kafka_config["service_uri"] == "example.org:123456"
     assert kafka_config["ssl_cafile"] == "ca.pem"
     assert kafka_config["ssl_certfile"] == "service.cert"
     assert kafka_config["ssl_keyfile"] == "service.key"
+
+
+def test_get_kafka_config_missing(monkeypatch):
+    monkeypatch.setenv("PINGA_CFG", "tests/config/bad.cfg")
+
+    with pytest.raises(BadConfigException) as exc:
+        get_kafka_config()
+
+    assert str(exc.value) == "Required section 'kafka' not found in .cfg file"
