@@ -16,6 +16,16 @@ def get_kafka_config() -> dict:
         raise BadConfigException("Required section 'kafka' not found in .cfg file")
 
 
+def get_pg_uri() -> dict:
+    config = _load_cfg_file()
+    try:
+        pg_uri = config.get('postgres', 'service_uri')
+    except (NoSectionError, NoOptionError) as err:
+        raise BadConfigException(str(err))
+
+    return pg_uri
+
+
 def get_sites_list() -> dict:
     config = _load_cfg_file()
     try:

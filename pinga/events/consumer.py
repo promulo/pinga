@@ -1,8 +1,12 @@
+import json
 from uuid import uuid4
 
+from jsonschema import SchemaError, ValidationError, validate
 from kafka import KafkaConsumer
 from pinga.config import get_kafka_config
 from pinga.log import get_logger
+from pinga.persistence import insert_error_event, insert_event
+from pinga.schema import STATUS_SCHEMA
 
 
 class Consumer:
@@ -35,5 +39,15 @@ class Consumer:
         """
         for received in self._kafka_consumer:
             message = received.value.decode("utf-8")
-            self._logger.info(f"Received: {message}")
-            # TODO save message in PostgreSQL
+            try:
+                event = json.loads(message)
+                validate(instance=event, schema=STATUS_SCHEMA)
+            except (json.decoder.JSONDecodeError, SchemaError, ValidationError):
+                self._logger.error(f"Received invalid message: '{message}'")
+                continue
+
+            self._logger.info(f"Received message: '{message}'")
+            if event["status"] == "error":
+                insert_error_event(event)
+            else:
+                insert_event(event)

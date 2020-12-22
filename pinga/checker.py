@@ -1,6 +1,6 @@
 import requests
 
-from log import get_logger
+from pinga.log import get_logger
 
 
 def check_site(site_url: str) -> dict:
