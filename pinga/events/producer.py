@@ -3,7 +3,7 @@ from pinga.config import get_kafka_config
 from pinga.log import get_logger
 
 
-class Producer():
+class Producer:
     """
     A Producer object abstracts the handling
     of sending Kafka events to a given cluster
@@ -22,9 +22,9 @@ class Producer():
 
     def emit(self, event):
         """
-        emit sends a given event to the Kafka cluster
+        Sends a message (event) to the respective Kafka topic
 
-        :param event: the event to be sent. It must UTF-8 encodable.
+        :param event: the message to be sent. It must be UTF-8 encodable.
         :raises ProducerException: event provided is invalid
         """
         try:
