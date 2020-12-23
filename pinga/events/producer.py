@@ -39,6 +39,14 @@ class Producer:
         else:
             self._logger.warning("Ignoring attempt of emitting empty string event")
 
+    def shutdown(self):
+        """
+        Shuts down producer by closing the Kafka producer
+        """
+        self._logger.info("Closing Kafka producer")
+        self._kafka_producer.flush()
+        self._kafka_producer.close()
+
 
 class ProducerException(Exception):
     pass

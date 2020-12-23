@@ -14,8 +14,6 @@ class Consumer:
     A Consumer object abstracts the handling
     of consuming events from a Kafka cluster
     """
-    POLL_TIMEOUT = 1000
-
     def __init__(self):
         self._logger = get_logger()
 
@@ -48,3 +46,10 @@ class Consumer:
             else:
                 self._logger.info(f"Received message: '{message}'")
                 save_event(self._db_conn, event)
+
+    def shutdown(self):
+        """
+        Shuts down consumer by closing the Kafka consumer
+        """
+        self._logger.info("Closing Kafka consumer")
+        self._kafka_consumer.close()
