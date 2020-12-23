@@ -1,0 +1,13 @@
+[Unit]
+Description=Pinga website checker consumer service
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=2
+ExecStart=/opt/pinga/pinga.sh consumer
+
+[Install]
+WantedBy=multi-user.target
