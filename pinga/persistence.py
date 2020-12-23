@@ -25,37 +25,36 @@ VALUES (%s, %s, %s);
 """
 
 
-def drop_events_table():
-    conn = psycopg2.connect(get_pg_uri())
+def get_db_conn():
+    return psycopg2.connect(get_pg_uri())
+
+
+def drop_events_table(conn):
     cursor = conn.cursor()
 
     cursor.execute("DROP TABLE IF EXISTS pinga_events;")
     conn.commit()
 
     cursor.close()
-    conn.close()
 
 
-def create_events_table():
-    conn = psycopg2.connect(get_pg_uri())
+def create_events_table(conn):
     cursor = conn.cursor()
 
     cursor.execute(QUERY_CREATE_EVENTS_TABLE)
     conn.commit()
 
     cursor.close()
-    conn.close()
 
 
-def save_event(event):
+def save_event(conn, event):
     if event["status"] == "error":
-        _insert_error_event(event)
+        _insert_error_event(conn, event)
     else:
-        _insert_event(event)
+        _insert_event(conn, event)
 
 
-def _insert_event(event):
-    conn = psycopg2.connect(get_pg_uri())
+def _insert_event(conn, event):
     cursor = conn.cursor()
 
     cursor.execute(
@@ -70,11 +69,9 @@ def _insert_event(event):
     conn.commit()
 
     cursor.close()
-    conn.close()
 
 
-def _insert_error_event(event):
-    conn = psycopg2.connect(get_pg_uri())
+def _insert_error_event(conn, event):
     cursor = conn.cursor()
 
     cursor.execute(
@@ -88,4 +85,3 @@ def _insert_error_event(event):
     conn.commit()
 
     cursor.close()
-    conn.close()

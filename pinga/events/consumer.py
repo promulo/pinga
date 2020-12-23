@@ -5,7 +5,7 @@ from jsonschema import SchemaError, ValidationError, validate
 from kafka import KafkaConsumer
 from pinga.config import get_kafka_config
 from pinga.log import get_logger
-from pinga.persistence import save_event
+from pinga.persistence import get_db_conn, save_event
 from pinga.schema import STATUS_SCHEMA
 
 
@@ -31,6 +31,7 @@ class Consumer:
             ssl_certfile=kafka_config["ssl_certfile"],
             ssl_keyfile=kafka_config["ssl_keyfile"],
         )
+        self._db_conn = get_db_conn()
 
     def consume(self):
         """
@@ -46,4 +47,4 @@ class Consumer:
                 self._logger.error(f"Received invalid message: '{message}', skipping")
             else:
                 self._logger.info(f"Received message: '{message}'")
-                save_event(event)
+                save_event(self._db_conn, event)

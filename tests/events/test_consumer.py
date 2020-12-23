@@ -1,9 +1,10 @@
 import json
-from unittest.mock import MagicMock, call, patch
+from unittest.mock import ANY, MagicMock, call, patch
 
 from pinga.events.consumer import Consumer
 
 
+@patch("pinga.events.consumer.get_db_conn")
 @patch("pinga.events.consumer.save_event")
 @patch("pinga.events.consumer.get_logger")
 @patch(
@@ -14,7 +15,7 @@ from pinga.events.consumer import Consumer
         MagicMock(value=b"")
     ]
 )
-def test_consumer_consume_invalid_events(mock_kafka, mock_logger, mock_save):
+def test_consumer_consume_invalid_events(mock_kafka, mock_logger, mock_save, mock_db_conn):
     consumer = Consumer()
     consumer.consume()
 
@@ -26,9 +27,10 @@ def test_consumer_consume_invalid_events(mock_kafka, mock_logger, mock_save):
     mock_save.assert_not_called()
 
 
+@patch("pinga.events.consumer.get_db_conn")
 @patch("pinga.events.consumer.save_event")
 @patch("pinga.events.consumer.KafkaConsumer")
-def test_consumer_consume_happy_path(mock_kafka, mock_save):
+def test_consumer_consume_happy_path(mock_kafka, mock_save, mock_db_conn):
     event_1 = {
         "url": "http://example.org/404",
         "status": "down",
@@ -48,4 +50,4 @@ def test_consumer_consume_happy_path(mock_kafka, mock_save):
     consumer = Consumer()
     consumer.consume()
 
-    mock_save.assert_has_calls([call(event_1), call(event_2)])
+    mock_save.assert_has_calls([call(ANY, event_1), call(ANY, event_2)])
