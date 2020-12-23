@@ -4,12 +4,13 @@ from pinga.config import get_pg_uri
 
 _QUERY_CREATE_EVENTS_TABLE = """
 CREATE TABLE IF NOT EXISTS pinga_events (
-    id serial PRIMARY KEY,
-    url text NOT NULL,
-    status text NOT NULL,
-    http_status integer,
-    response_time_seconds float,
-    error_message text
+    id SERIAL PRIMARY KEY,
+    check_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    url TEXT NOT NULL,
+    status TEXT NOT NULL,
+    http_status INTEGER,
+    response_time_seconds FLOAT,
+    error_message TEXT
 );
 """
 
