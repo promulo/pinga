@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  producer:
+    build: .
+    command: python run_producer.py
+  consumer:
+    build: .
+    command: python run_consumer.py
