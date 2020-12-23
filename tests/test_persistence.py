@@ -1,6 +1,14 @@
 from unittest.mock import call, patch
 
-from pinga.persistence import QUERY_INSERT_ERROR_EVENT, QUERY_INSERT_EVENT, save_event
+from pinga.persistence import (QUERY_INSERT_ERROR_EVENT, QUERY_INSERT_EVENT,
+                               get_db_conn, save_event)
+
+
+@patch("pinga.persistence.psycopg2.connect")
+def test_get_db_conn(mock_db):
+    get_db_conn()
+
+    mock_db.assert_called_once_with("postgresl://foo:bar@localhost/test")
 
 
 @patch("pinga.persistence.psycopg2.connect")
