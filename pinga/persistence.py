@@ -47,7 +47,14 @@ def create_events_table():
     conn.close()
 
 
-def insert_event(event):
+def save_event(event):
+    if event["status"] == "error":
+        _insert_error_event(event)
+    else:
+        _insert_event(event)
+
+
+def _insert_event(event):
     conn = psycopg2.connect(get_pg_uri())
     cursor = conn.cursor()
 
@@ -66,7 +73,7 @@ def insert_event(event):
     conn.close()
 
 
-def insert_error_event(event):
+def _insert_error_event(event):
     conn = psycopg2.connect(get_pg_uri())
     cursor = conn.cursor()
 
