@@ -3,7 +3,7 @@
 install_dependencies() {
     python3 -m venv .venv
     source .venv/bin/activate
-    pip3 install -r /opt/pinga/requirements.txt
+    pip3 install -r requirements.txt
 }
 
 cd /opt/pinga
@@ -13,10 +13,10 @@ if [ $# -lt 1 ]; then
     exit 1
 elif [ $1 == "producer" ]; then
     install_dependencies
-    .venv/bin/python /opt/pinga/run_producer.py
+    .venv/bin/python run_producer.py
 elif [ $1 == "consumer" ]; then
     install_dependencies
-    .venv/bin/python /opt/pinga/run_consumer.py
+    .venv/bin/python run_consumer.py
 else
     echo "FATAL: Unknown option ${1}. Valid options are: producer|consumer"
 fi
