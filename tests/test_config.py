@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 import pytest
-from pinga.config import BadConfigException, get_kafka_config, get_sites_list
+from pinga.config import BadConfigException, get_kafka_config, get_pg_uri, get_sites_list
 
 
 @pytest.mark.parametrize(
@@ -57,3 +57,16 @@ def test_get_kafka_config_missing(monkeypatch):
         get_kafka_config()
 
     assert str(exc.value) == "Required section 'kafka' not found in .cfg file"
+
+
+def test_get_pg_uri_happy_path():
+    assert get_pg_uri() == "postgresl://foo:bar@localhost/test"
+
+
+def test_get_pg_uri_missing(monkeypatch):
+    monkeypatch.setenv("PINGA_CFG", "tests/config/bad.cfg")
+
+    with pytest.raises(BadConfigException) as exc:
+        get_pg_uri()
+
+    assert str(exc.value) == "No section: 'postgres'"

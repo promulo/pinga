@@ -2,7 +2,7 @@ import psycopg2
 
 from pinga.config import get_pg_uri
 
-_QUERY_CREATE_EVENTS_TABLE = """
+QUERY_CREATE_EVENTS_TABLE = """
 CREATE TABLE IF NOT EXISTS pinga_events (
     id SERIAL PRIMARY KEY,
     check_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -14,12 +14,12 @@ CREATE TABLE IF NOT EXISTS pinga_events (
 );
 """
 
-_QUERY_INSERT_EVENT = """
+QUERY_INSERT_EVENT = """
 INSERT INTO pinga_events (url, status, http_status, response_time_seconds)
 VALUES (%s, %s, %s, %s);
 """
 
-_QUERY_INSERT_ERROR_EVENT = """
+QUERY_INSERT_ERROR_EVENT = """
 INSERT INTO pinga_events (url, status, error_message)
 VALUES (%s, %s, %s);
 """
@@ -40,7 +40,7 @@ def create_events_table():
     conn = psycopg2.connect(get_pg_uri())
     cursor = conn.cursor()
 
-    cursor.execute(_QUERY_CREATE_EVENTS_TABLE)
+    cursor.execute(QUERY_CREATE_EVENTS_TABLE)
     conn.commit()
 
     cursor.close()
@@ -52,7 +52,7 @@ def insert_event(event):
     cursor = conn.cursor()
 
     cursor.execute(
-        _QUERY_INSERT_EVENT,
+        QUERY_INSERT_EVENT,
         (
             event["url"],
             event["status"],
@@ -71,7 +71,7 @@ def insert_error_event(event):
     cursor = conn.cursor()
 
     cursor.execute(
-        _QUERY_INSERT_ERROR_EVENT,
+        QUERY_INSERT_ERROR_EVENT,
         (
             event["url"],
             event["status"],
