@@ -36,9 +36,13 @@ This section specifies the aiven Kafka cluster that Pinga will connect to. Pleas
 placeholders for `service_uri`, `ssl_cafile`, `ssl_certfile` and `ssl_keyfile` with the appropriate
 values. They can be easily retrieved from the aiven console.
 
+**IMPORTANT: it is assumed that a topic named 'pinga-events' is available**
+
 ### postgres
 This section defines the PostgreSQL instance where events will be saved. Please fill the
 `service_uri` with the value provided by the aiven console.
+
+**IMPORTANT: it is assumed that a database named 'pinga-events' is available with write permissions**
 
 ### checker
 This section specifies a JSON file containing a list of websites to be checked by Pinga. An example
