@@ -19,8 +19,8 @@ executed in any given order.
 * psycopg2
 * jsonschema
 * requests
-* aiven Kafka
-* aiven PostgreSQL
+* aiven for Apache Kafka
+* aiven for PostgreSQL
 
 ## Setup of aiven services and Pinga configuration
 

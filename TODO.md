@@ -16,7 +16,6 @@ Other TODO items are listed below.
 
 - Make check interval configurable (currently 5s)
 - Make Kafka topic configurable (currently pinga-events)
-- Automate PostgreSQL database creation
 - More restricted networking and VPC configuration
 - Terraform to output service URIs somewhere
   - CI to pull config values from the above during build
