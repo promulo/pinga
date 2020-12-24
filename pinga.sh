@@ -6,8 +6,6 @@ install_dependencies() {
     pip3 install -r requirements.txt
 }
 
-cd /opt/pinga
-
 if [ $# -lt 1 ]; then
     echo "FATAL: No parameter supplied. Usage: ./pinga.sh producer|consumer"
     exit 1
