@@ -51,3 +51,12 @@ def test_consumer_consume_happy_path(mock_kafka, mock_save, mock_db_conn):
     consumer.consume()
 
     mock_save.assert_has_calls([call(ANY, event_1), call(ANY, event_2)])
+
+
+@patch("pinga.events.consumer.get_db_conn")
+@patch("pinga.events.consumer.create_events_table")
+@patch("pinga.events.consumer.KafkaConsumer")
+def test_consumer_table_created(mock_kafka, mock_create_table, mock_db_conn):
+    _ = Consumer()
+
+    mock_create_table.assert_called_once_with(mock_db_conn())

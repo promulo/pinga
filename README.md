@@ -24,7 +24,25 @@ executed in any given order.
 
 ## Setup of aiven services and Pinga configuration
 
-TBD
+At this stage of development, Pinga relies on two DBaaS products: [**aiven for Apache Kafka**](https://aiven.io/kafka) and [**aiven for PostgreSQL**](https://aiven.io/postgresql). It is assumed that those services are provisioned and running. Please refer to [aiven](https://help.aiven.io/en/articles/489573-getting-started-with-aiven-postgresql)
+[documentation](https://help.aiven.io/en/articles/489572-getting-started-with-aiven-kafka) for
+details about setting up those services.
+
+Pinga configuration is set in the `pinga.cfg` file. It consists of three sections, `kafka`,
+`postgres` and `checker`.
+
+### kafka
+This section specifies the aiven Kafka cluster that Pinga will connect to. Please replace the
+placeholders for `service_uri`, `ssl_cafile`, `ssl_certfile` and `ssl_keyfile` with the appropriate
+values. They can be easily retrieved from the aiven console.
+
+### postgres
+This section defines the PostgreSQL instance where events will be saved. Please fill the
+`service_uri` with the value provided by the aiven console.
+
+### checker
+This section specifies a JSON file containing a list of websites to be checked by Pinga. An example
+is provided and named `sites.json`.
 
 ## Running Pinga components using docker-compose
 
@@ -33,6 +51,8 @@ The easiest way to see Pinga working is by running the provided `docker-compose`
 $ docker-compose up
 ```
 The command above will run both Pinga Producer and Pinga Consumer in separate containers.
+
+In case of code changes, `docker-compose build` must be executed before restarting.
 
 ## Running Pinga components separately as standalone processes
 
@@ -79,9 +99,12 @@ Tests and Code Climate checks are done for every PR. [GitHub Actions](https://gi
 * [Kanban board](https://github.com/promulo/pinga/projects/1)
 * [Open issues](https://github.com/promulo/pinga/issues)
 
-## References
+## Further documentation and references
 
+* https://help.aiven.io/en/articles/489573-getting-started-with-aiven-postgresql
 * https://help.aiven.io/en/articles/489572-getting-started-with-aiven-kafka
 * https://kafka-python.readthedocs.io/en/master/index.html
 * http://www.gevent.org/
+* https://www.psycopg.org/
+* https://requests.readthedocs.io/en/master/
 * https://registry.terraform.io/providers/aiven/aiven/latest/docs
