@@ -24,9 +24,7 @@ executed in any given order.
 
 ## Setup of aiven services and Pinga configuration
 
-At this stage of development, Pinga relies on two DBaaS products: **aiven for Apache Kafka** and
-**aiven for PostgreSQL**. It is assumed that those services are provisioned and running.
-Please refer to [aiven](https://help.aiven.io/en/articles/489573-getting-started-with-aiven-postgresql)
+At this stage of development, Pinga relies on two DBaaS products: [**aiven for Apache Kafka**](https://aiven.io/kafka) and [**aiven for PostgreSQL**](https://aiven.io/postgresql). It is assumed that those services are provisioned and running. Please refer to [aiven](https://help.aiven.io/en/articles/489573-getting-started-with-aiven-postgresql)
 [documentation](https://help.aiven.io/en/articles/489572-getting-started-with-aiven-kafka) for
 details about setting up those services.
 
