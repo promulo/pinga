@@ -2,7 +2,7 @@
 
 # Pinga - A simple website status checker
 
-Pinga is website status checker written in Python. It consists of two independent parts.
+Pinga is website status checker written in Python. It consists of two independent components.
 On one hand, there is a producer that asynchronously and periodically (every 5 seconds)
 checks a given list of websites and sends the results as events to a configured aiven Kafka
 cluster. The second component is a consumer of Kafka messages that will process the produced
@@ -70,7 +70,7 @@ $ ./pinga.sh producer
 
 ### Pinga Consumer
 
-The consumer connects to the Kafka cluster, subscribe to the topic and consume the messages as
+The consumer connects to the Kafka cluster, subscribes to the topic and consumes the messages as
 they arrive. All events are persisted in PostgreSQL right after consumption. The consumer can
 be executed by doing the following:
 ```
@@ -79,7 +79,7 @@ $ ./pinga.sh consumer
 
 ## Running the tests
 
-The unit tests were based on `pytest`. They can be executed by following these steps:
+The unit tests were written based on `pytest`. They can be executed by following these steps:
 ```
 $ python3 -m venv .venv-tests
 $ source .venv-tests/bin/activate
