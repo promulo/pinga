@@ -2,4 +2,4 @@ gevent==23.9.1
 jsonschema==3.2.0
 kafka-python==2.0.2
 psycopg2-binary==2.8.6 # NOTE: https://www.psycopg.org/docs/install.html#psycopg-vs-psycopg-binary
-requests==2.32.0
+requests==2.32.4
